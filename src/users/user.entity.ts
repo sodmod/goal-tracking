@@ -1,5 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Goal } from '../goals/goal.entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'users' })
 export class User {
@@ -18,6 +17,6 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @OneToMany(() => Goal, (goal) => goal.user)
-  goals: Goal[];
+  @Column()
+  password: string;
 }

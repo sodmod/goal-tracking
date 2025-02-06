@@ -14,7 +14,7 @@ export class UserService {
     const alreadyExist = await this.userAlreadyExist(registerUserDTO.email);
 
     if (alreadyExist) {
-      throw new HttpException('Found', HttpStatus.FOUND);
+      throw new HttpException('User already Exist', HttpStatus.FOUND);
     }
 
     // create User entity
@@ -23,6 +23,7 @@ export class UserService {
     user.lastname = registerUserDTO.lastname;
     user.othername = registerUserDTO.othername;
     user.email = registerUserDTO.email;
+    user.password = registerUserDTO.password;
 
     // save user
     await this.userRepository.save(user);
@@ -30,6 +31,16 @@ export class UserService {
     console.log('user created successfully');
 
     return 'success';
+  }
+
+  public async getUserObject(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { email } });
+
+    if (!user) {
+      throw new HttpException('NOT FOUNT', HttpStatus.NOT_FOUND);
+    } else {
+      return user;
+    }
   }
 
   private async userAlreadyExist(email: string): Promise<boolean> {

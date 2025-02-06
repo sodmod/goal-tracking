@@ -3,4 +3,5 @@ export class RegisterUserDTO {
   lastname: string;
   othername: string;
   email: string;
+  password: string;
 }

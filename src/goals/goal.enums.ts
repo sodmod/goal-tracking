@@ -8,4 +8,5 @@ export enum GoalType {
   DAILY = 'daily',
   WEEKLY = 'weekly',
   MONTHLY = 'monthly',
+  YEARLY = 'yearly',
 }
