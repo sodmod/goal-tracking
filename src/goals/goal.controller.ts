@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Get, Param } from '@nestjs/common';
 import { GoalService } from './goal.service';
-import { CreateGoalDTO, GoalResponseDTO } from './goal.dto';
+import { CreateGoalDTO, GoalDetailsDTO, GoalResponseDTO } from './goal.dto';
 
 @Controller('goals')
 export class GoalController {
@@ -16,5 +16,12 @@ export class GoalController {
     @Param('email') email: string,
   ): Promise<GoalResponseDTO[]> {
     return await this.goalService.getAllUserGoals(email);
+  }
+
+  @Get('view/:goalId')
+  async viewUserGoalDetails(
+    @Param('goalId') goalId: number,
+  ): Promise<GoalDetailsDTO> {
+    return await this.goalService.viewUserGoalDetails(goalId);
   }
 }

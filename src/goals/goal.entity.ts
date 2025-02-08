@@ -38,14 +38,12 @@ export class Goal {
   @Column({
     type: 'timestamp',
     nullable: true,
-    default: () => 'CURRENT_TIMESTAMP',
   })
   startDate: Date;
 
   @Column({
     type: 'timestamp',
     nullable: true,
-    default: () => 'CURRENT_TIMESTAMP',
   })
   endDate: Date;
 
