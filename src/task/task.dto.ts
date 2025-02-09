@@ -1,5 +1,6 @@
 import { Goal } from 'src/goals/goal.entity';
 import { TaskPriority, TaskStatus } from './task.enums';
+import { IsNotEmpty, IsNotEmptyObject } from 'class-validator';
 
 export class TaskRequestDTO implements Omit<CreateTaskDTO, 'goal'> {
   title: string;
@@ -10,11 +11,21 @@ export class TaskRequestDTO implements Omit<CreateTaskDTO, 'goal'> {
 }
 
 export class CreateTaskDTO {
+  @IsNotEmptyObject()
   goal: Goal;
+
+  @IsNotEmpty()
   title: string;
+
   comments: string;
+
+  @IsNotEmpty()
   dueDate: Date;
+
+  @IsNotEmpty()
   status: TaskStatus;
+
+  @IsNotEmpty()
   priority: TaskPriority;
 }
 

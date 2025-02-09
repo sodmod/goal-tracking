@@ -1,9 +1,15 @@
 import { TaskRequestDTO, UsersTasksDTO } from 'src/task/task.dto';
 import { GoalStatus, GoalType } from './goal.enums';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateGoalDTO {
+  @IsNotEmpty()
+  @IsString()
   userEmail: string;
+
+  @IsNotEmpty()
   title: string;
+
   description: string;
   status: GoalStatus;
   type: GoalType;
@@ -13,6 +19,7 @@ export class CreateGoalDTO {
 }
 
 export class GoalResponseDTO {
+  id: number;
   title: string;
   status: GoalStatus;
   type: GoalType;
