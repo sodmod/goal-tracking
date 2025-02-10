@@ -10,3 +10,10 @@ export enum GoalType {
   MONTHLY = 'monthly',
   YEARLY = 'yearly',
 }
+
+export enum GoalCategory {
+  HEALTH = 'health',
+  SCHOOL = 'school',
+  CAREER = 'career',
+  PERSONAL_DEVELOPMENT = 'personal_development',
+}

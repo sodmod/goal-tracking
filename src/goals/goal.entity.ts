@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from '../users/user.entity';
-import { GoalStatus, GoalType } from './goal.enums';
+import { GoalCategory, GoalStatus, GoalType } from './goal.enums';
 
 @Entity({ name: 'goals' })
 export class Goal {
@@ -18,6 +18,13 @@ export class Goal {
 
   @Column('text')
   description: string;
+
+  @Column({
+    type: 'enum',
+    enum: GoalCategory,
+    default: GoalCategory.PERSONAL_DEVELOPMENT,
+  })
+  category: GoalCategory;
 
   @Column({
     type: 'enum',
@@ -47,6 +54,6 @@ export class Goal {
   })
   endDate: Date;
 
-  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, { onDelete: 'CASCADE', lazy: true })
   user: User;
 }

@@ -2,11 +2,17 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Goal } from './goal.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateGoalDTO, GoalDetailsDTO, GoalResponseDTO } from './goal.dto';
+import {
+  CreateGoalRequestDTO,
+  GoalDetailsDTO,
+  GoalResponseDTO,
+  UpdateGoalRequestDTO,
+} from './goal.dto';
 import { UserService } from 'src/users/user.service';
 import { TaskService } from 'src/task/task.service';
 import { UsersTasksDTO } from 'src/task/task.dto';
 import { Task } from 'src/task/task.entity';
+import { GoalStatus } from './goal.enums';
 
 @Injectable()
 export class GoalService {
@@ -17,7 +23,9 @@ export class GoalService {
   ) {}
 
   // create a goal for a user
-  async createGoalService(createGoalDTO: CreateGoalDTO): Promise<string> {
+  async createGoalService(
+    createGoalDTO: CreateGoalRequestDTO,
+  ): Promise<string> {
     // get the user info, get user info
     const user = await this.userService.getUserObject(createGoalDTO.userEmail);
 
@@ -59,8 +67,12 @@ export class GoalService {
     return goals.map((goal) => ({
       id: goal.id,
       title: goal.title,
+      description: goal.description,
       status: goal.status,
       type: goal.type,
+      startDate: goal.startDate,
+      endDate: goal.endDate,
+      createdAt: goal.createdAt,
     }));
   }
 
@@ -82,6 +94,39 @@ export class GoalService {
       createdAt: goal.createdAt,
       tasks,
     };
+  }
+
+  async updateUserGoal(
+    updateGoalRequestDTO: UpdateGoalRequestDTO,
+  ): Promise<void> {
+    const goal = await this.findGoalById(updateGoalRequestDTO.id);
+
+    // update entity colums with recents
+    goal.category = updateGoalRequestDTO.category;
+    goal.description = updateGoalRequestDTO.description;
+    goal.status = updateGoalRequestDTO.status;
+    goal.title = updateGoalRequestDTO.title;
+    goal.type = updateGoalRequestDTO.type;
+
+    // check if date exists
+    if (updateGoalRequestDTO.startDate) {
+      goal.startDate = updateGoalRequestDTO.startDate;
+    }
+    if (updateGoalRequestDTO.endDate) {
+      goal.endDate = updateGoalRequestDTO.endDate;
+    }
+
+    await this.goalRepository.save(goal);
+  }
+
+  // get all goal status availale
+  getAllGoalStatus(): GoalStatus[] {
+    return Object.values(GoalStatus);
+  }
+
+  // delete goal which will also delete task, or relatives
+  async deleteGoal(id: number): Promise<void> {
+    this.goalRepository.delete({ id });
   }
 
   async findGoalById(id: number): Promise<Goal> {
