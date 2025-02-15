@@ -1,18 +1,14 @@
 import {
   Column,
-  CreateDateColumn,
   Entity,
   ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 import { TaskPriority, TaskStatus } from './task.enums';
 import { Goal } from '../goals/goal.entity';
+import { BaseEntity } from 'src/baseEntity.entity';
 
 @Entity({ name: 'tasks' })
-export class Task {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class Task extends BaseEntity{
 
   @Column('text')
   title: string;
@@ -39,10 +35,5 @@ export class Task {
 
   @ManyToOne(() => Goal, { onDelete: 'CASCADE' })
   goal: Goal;
-
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  updatedAt: Date;
+  
 }

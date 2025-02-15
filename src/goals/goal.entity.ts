@@ -7,9 +7,10 @@ import {
 } from 'typeorm';
 import { User } from '../users/user.entity';
 import { GoalCategory, GoalStatus, GoalType } from './goal.enums';
+import { BaseEntity } from 'src/baseEntity.entity';
 
 @Entity({ name: 'goals' })
-export class Goal {
+export class Goal extends BaseEntity{
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -38,9 +39,6 @@ export class Goal {
     enum: GoalType,
   })
   type: GoalType;
-
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
 
   @Column({
     type: 'timestamp',

@@ -13,11 +13,11 @@ import { ArchivedGoalModule } from './archivedGoal/archived-goal.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: '172.29.84.119',
       port: 5432,
-      username: 'postgres',
-      password: 'Passw0rd',
-      database: 'goal_tracking',
+      username: 'admin',
+      password: 'sodmod1999',
+      database: 'goal-tracking',
       entities: [User, Goal, Task, ArchivedGoal],
       synchronize: true,
       logging: true,
@@ -29,3 +29,4 @@ import { ArchivedGoalModule } from './archivedGoal/archived-goal.module';
   ],
 })
 export class AppModule {}
+
