@@ -1,15 +1,10 @@
-import {
-  Column,
-  Entity,
-  ManyToOne,
-} from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { TaskPriority, TaskStatus } from './task.enums';
 import { Goal } from '../goals/goal.entity';
 import { BaseEntity } from 'src/baseEntity.entity';
 
 @Entity({ name: 'tasks' })
-export class Task extends BaseEntity{
-
+export class Task extends BaseEntity {
   @Column('text')
   title: string;
 
@@ -35,5 +30,4 @@ export class Task extends BaseEntity{
 
   @ManyToOne(() => Goal, { onDelete: 'CASCADE' })
   goal: Goal;
-  
 }

@@ -8,6 +8,8 @@ import { ArchivedGoal } from './archivedGoal/archived-goal.entity';
 import { GoalModule } from './goals/goal.module';
 import { TaskModule } from './task/task.module';
 import { ArchivedGoalModule } from './archivedGoal/archived-goal.module';
+import { Journal } from './journals/journal.entity';
+import { JournalModule } from './journals/journal.module';
 
 @Module({
   imports: [
@@ -18,7 +20,7 @@ import { ArchivedGoalModule } from './archivedGoal/archived-goal.module';
       username: 'admin',
       password: 'sodmod1999',
       database: 'goal-tracking',
-      entities: [User, Goal, Task, ArchivedGoal],
+      entities: [User, Goal, Task, ArchivedGoal, Journal],
       synchronize: true,
       logging: true,
     }),
@@ -26,7 +28,7 @@ import { ArchivedGoalModule } from './archivedGoal/archived-goal.module';
     GoalModule,
     TaskModule,
     ArchivedGoalModule,
+    JournalModule,
   ],
 })
 export class AppModule {}
-

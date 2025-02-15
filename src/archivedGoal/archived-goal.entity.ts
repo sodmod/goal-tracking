@@ -3,7 +3,7 @@ import { User } from 'src/users/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'archived_goals' })
-export class ArchivedGoal extends BaseEntity{
+export class ArchivedGoal extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

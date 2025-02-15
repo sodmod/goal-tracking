@@ -1,15 +1,12 @@
-import { BaseEntity } from "src/baseEntity.entity";
-import { Goal } from "src/goals/goal.entity";
-import { User } from "src/users/user.entity";
-import { Entity, ManyToOne, OneToOne } from "typeorm";
+import { BaseEntity } from 'src/baseEntity.entity';
+import { Goal } from 'src/goals/goal.entity';
+import { Column, Entity, ManyToOne } from 'typeorm';
 
-@Entity({name: 'journals'})
-export class Journal extends BaseEntity{
+@Entity({ name: 'journals' })
+export class Journal extends BaseEntity {
+  @ManyToOne(() => Goal, { onDelete: 'CASCADE', lazy: true })
+  goal: Goal;
 
-    id: number;
-
-    @ManyToOne(()=> Goal, {onDelete: 'CASCADE', lazy: true})
-    goal: Goal;
-
-    createdAt: Date;
+  @Column({ type: 'text' })
+  content: string;
 }

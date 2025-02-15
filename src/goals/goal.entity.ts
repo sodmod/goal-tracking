@@ -1,19 +1,10 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { User } from '../users/user.entity';
 import { GoalCategory, GoalStatus, GoalType } from './goal.enums';
 import { BaseEntity } from 'src/baseEntity.entity';
 
 @Entity({ name: 'goals' })
-export class Goal extends BaseEntity{
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Goal extends BaseEntity {
   @Column()
   title: string;
 
