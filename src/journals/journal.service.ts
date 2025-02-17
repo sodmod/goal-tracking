@@ -16,8 +16,7 @@ export class JournalService {
   async createJournal(
     createJournalRequestDTO: CreateJournalRequestDTO,
   ): Promise<void> {
-
-    // find goal object 
+    // find goal object
     const goal = await this.goalService.findGoalById(
       createJournalRequestDTO.goalId,
     );

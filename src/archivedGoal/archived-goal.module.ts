@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ArchivedGoal } from './archived-goal.entity';
 import { ArchivedGoalService } from './archived-goal.service';
+import { archivedGoalDataSource } from 'src/db/db.configurations';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ArchivedGoal])],
+  imports: [archivedGoalDataSource],
   providers: [ArchivedGoalService],
   exports: [ArchivedGoalService],
 })

@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Goal } from './goal.entity';
 import { GoalService } from './goal.service';
 import { GoalController } from './goal.controller';
 import { UserModule } from 'src/users/user.module';
 import { TaskModule } from 'src/task/task.module';
+import { goalDataSource } from 'src/db/db.configurations';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Goal]), UserModule, TaskModule],
+  imports: [goalDataSource, UserModule, TaskModule],
   providers: [GoalService],
   exports: [GoalService],
   controllers: [GoalController],
