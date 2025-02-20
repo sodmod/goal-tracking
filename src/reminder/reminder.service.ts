@@ -30,10 +30,10 @@ export class ReminderService {
 
 @Injectable()
 export class ReminderProcessorService {
-  private woker: Worker;
+  private worker: Worker;
   constructor(@Inject('REDIS_CLIENT') private readonly redisClient: Redis) {
     // listen to reminder que and run the job
-    this.woker = new Worker(
+    this.worker = new Worker(
       'reminders',
       async (job) => {
         console.log(
@@ -44,5 +44,14 @@ export class ReminderProcessorService {
       },
       { connection: this.redisClient },
     );
+
+    // implement for futrue use
+    // this.worker.on('completed', (job) => {
+    //   console.log(`Reminder job ${job.id} completed successfully!`);
+    // });
+
+    // this.worker.on('failed', (job, err) => {
+    //   console.error(`Reminder job ${job?.id} failed:`, err);
+    // });
   }
 }
