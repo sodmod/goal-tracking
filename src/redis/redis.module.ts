@@ -6,17 +6,17 @@ import { Global, Module } from '@nestjs/common';
 @Module({
   providers: [
     {
-      provide: 'REDIS_CLIENT', // Register a global Redis client
+      provide: 'REDIS_CLIENT', 
       useFactory: () => {
         return new Redis({
-          host: '172.29.84.119', // Your Redis host
-          port: 6379, // Your Redis port
+          host: '172.29.84.119',
+          port: 6379,
           maxRetriesPerRequest: null,
         });
       },
     },
-    RedisService, // Create a service to handle Redis actions if needed
+    RedisService,
   ],
-  exports: ['REDIS_CLIENT', RedisService], // Export for global use
+  exports: ['REDIS_CLIENT', RedisService],
 })
 export class RedisModule {}

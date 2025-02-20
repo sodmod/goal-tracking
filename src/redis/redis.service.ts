@@ -4,11 +4,11 @@ import Redis from 'ioredis';
 @Injectable()
 export class RedisService {
   constructor(
-    @Inject('REDIS_CLIENT') private readonly redisClient: Redis, // Inject Redis client
+    @Inject('REDIS_CLIENT') private readonly redisClient: Redis,
   ) {}
 
   async set(key: string, value: any) {
-    await this.redisClient.set(key, JSON.stringify(value), 'EX', 3600); // Set with expiration time (1 hour)
+    await this.redisClient.set(key, JSON.stringify(value), 'EX', 3600);
   }
 
   async get(key: string) {

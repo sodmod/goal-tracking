@@ -8,7 +8,7 @@ export class BullMQService {
   private queue: Queue;
 
   constructor(
-    @Inject('REDIS_CLIENT') private readonly redisClient: Redis, // Use global Redis client
+    @Inject('REDIS_CLIENT') private readonly redisClient: Redis,
   ) {
     // Initialize the BullMQ queue with the Redis connection
     this.queue = new Queue('reminders', {
