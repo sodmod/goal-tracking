@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { GoalService } from 'src/goals/goal.service';
-import { CreateJournalRequestDTO, ViewJournalDTO } from './journal.dto';
+import {
+  CreateJournalRequestDTO,
+  UpdateJournalRequestDTO,
+  ViewJournalDTO,
+} from './journal.dto';
 import { Journal } from './journal.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -30,7 +34,9 @@ export class JournalService {
     await this.journalRepository.save(journal);
   }
 
-  async viewAllJournal(goalId: number): Promise<ViewJournalDTO[] | null> {
+  async viewAllJournalsByGoal(
+    goalId: number,
+  ): Promise<ViewJournalDTO[] | null> {
     // get list of journal by a goal
     const journal = await this.journalRepository.findBy({
       goal: { id: goalId },
@@ -43,5 +49,22 @@ export class JournalService {
       createdAt: journal.createdAt,
       updatedAt: journal.updatedAt,
     }));
+  }
+
+  async updateJournalById(
+    updateJournalRequestDTO: UpdateJournalRequestDTO,
+  ): Promise<void> {
+    // get journal to be update by id
+    const journal = await this.journalRepository.findOne({
+      where: { id: updateJournalRequestDTO.id },
+    });
+    // update journal
+    journal.content = updateJournalRequestDTO.context;
+    // resave journal
+    await this.journalRepository.save(journal);
+  }
+
+  async deleteJournalById(id: number): Promise<void> {
+    await this.journalRepository.delete(id);
   }
 }

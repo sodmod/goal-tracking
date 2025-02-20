@@ -11,6 +11,7 @@ export class RegisterUserDTO {
   othername: string;
 
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
   @IsNotEmpty()

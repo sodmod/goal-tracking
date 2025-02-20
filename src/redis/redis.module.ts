@@ -11,6 +11,7 @@ import { Global, Module } from '@nestjs/common';
         return new Redis({
           host: '172.29.84.119', // Your Redis host
           port: 6379, // Your Redis port
+          maxRetriesPerRequest: null,
         });
       },
     },

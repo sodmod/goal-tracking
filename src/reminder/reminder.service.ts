@@ -1,27 +1,40 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Reminder } from './reminder.entity';
 import { Repository } from 'typeorm';
-import { UserService } from 'src/users/user.service';
 import Redis from 'ioredis';
 import { Worker } from 'bullmq';
+import { SetReminderRequestDTO } from './reminder.dto';
+import { BullMQService } from 'src/bullmq/bull-mq.service';
 
 @Injectable()
 export class ReminderService {
   constructor(
-    private readonly userService: UserService,
+    private readonly bullService: BullMQService,
     @InjectRepository(Reminder)
     private readonly reminderRepository: Repository<Reminder>,
   ) {}
+
+  async setReminder(
+    setReminderRequestDTO: SetReminderRequestDTO,
+  ): Promise<void> {
+    console.log("set reminder")
+    this.bullService.addReminderJob({
+      userId: setReminderRequestDTO.userId,
+      message: setReminderRequestDTO.message,
+      timestamp: setReminderRequestDTO.timestamp,
+    });
+  }
 }
+
 
 @Injectable()
 export class ReminderProcessorService {
   private woker: Worker;
-  constructor(private readonly redisClient: Redis) {
+  constructor(@Inject('REDIS_CLIENT') private readonly redisClient: Redis) {
     // listen to reminder que and run the job
     this.woker = new Worker(
-      'reminder',
+      'reminders',
       async (job) => {
         console.log(
           `sending reminder to this user below ${job.data.userId}: ${job.data.message}`,

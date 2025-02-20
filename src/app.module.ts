@@ -7,6 +7,7 @@ import { JournalModule } from './journals/journal.module';
 import { dbConnectionPool } from './db/db.configurations';
 import { RedisModule } from './redis/redis.module';
 import { BullMqModule } from './bullmq/bull-mq.module';
+import { ReminderModule } from './reminder/reminder.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { BullMqModule } from './bullmq/bull-mq.module';
     JournalModule,
     RedisModule,
     BullMqModule,
+    ReminderModule,
   ],
 })
 export class AppModule {}

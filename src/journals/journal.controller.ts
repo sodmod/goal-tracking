@@ -1,6 +1,18 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { JournalService } from './journal.service';
-import { CreateJournalRequestDTO, ViewJournalDTO } from './journal.dto';
+import {
+  CreateJournalRequestDTO,
+  UpdateJournalRequestDTO,
+  ViewJournalDTO,
+} from './journal.dto';
 
 @Controller('journal')
 export class JournalController {
@@ -13,10 +25,22 @@ export class JournalController {
     await this.journalService.createJournal(createJournalRequestDTO);
   }
 
-  @Get('all/:id')
-  async viewAllJournal(
+  @Get('all/:goalId')
+  async viewAllJournalByGoal(
     @Param('goalId') goalId: number,
   ): Promise<ViewJournalDTO[] | null> {
-    return await this.journalService.viewAllJournal(goalId);
+    return await this.journalService.viewAllJournalsByGoal(goalId);
+  }
+
+  @Put()
+  async updateJournalById(
+    @Body() updateJournalRequestDTO: UpdateJournalRequestDTO,
+  ): Promise<void> {
+    await this.journalService.updateJournalById(updateJournalRequestDTO);
+  }
+
+  @Delete(':id')
+  async deleteJournalById(@Param('id') id: number): Promise<void> {
+    return await this.journalService.deleteJournalById(id);
   }
 }

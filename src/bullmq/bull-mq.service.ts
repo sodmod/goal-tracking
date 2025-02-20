@@ -1,6 +1,7 @@
 import { Queue } from 'bullmq';
 import { Inject, Injectable } from '@nestjs/common';
 import { Redis } from 'ioredis';
+import { addReminderJob } from './bull-mq.dto';
 
 @Injectable()
 export class BullMQService {
@@ -16,12 +17,18 @@ export class BullMQService {
   }
 
   // add a reminder job
-  async addReminderJob(userId: string, message: string, timestamp: number) {
+  async addReminderJob({ userId, message, timestamp }: addReminderJob) {
+
+    console.log("bull-mq service add to redis")
     // Calculate delay in milliseconds
-    const delay = timestamp - Date.now();
+    // const delay = timestamp - Date.now();
+    const delay = (Date.now()+10*60*1000) - Date.now();
     if (delay <= 0) return; // If time has passed, don't schedule the job
 
+    console.log(`reminder will be delayed for ${delay}`);
     // Add a job to the queue for a reminder
     await this.queue.add('sendReminder', { userId, message }, { delay });
+
+    console.log(`************** reminder set automatically with time ${delay} from now`)
   }
 }
